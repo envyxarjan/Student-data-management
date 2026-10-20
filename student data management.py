@@ -1,54 +1,61 @@
+
 class Student:
-    def init(self, name, address, age, grade):
+    def __init__(self, name, address, age, grade):
         self.name = name
         self.address = address
         self.age = age
         self.grade = grade
 
-    def save(students):
 
-        file = open("Students.txt", "w")
-        file.write(
-            f"Name: {students.name}\nAddress: {students.address}\nAge: {students.age}\nGrade: {students.grade}")
+def save_students(students):
+    with open("Students.txt", "w") as file:
         for s in students:
             file.write(
                 f"Name: {s.name}\nAddress: {s.address}\nAge: {s.age}\nGrade: {s.grade}")
-        file.close()
-        print("Data saved successfully to Students.txt")
 
-    def search(students, name):
-        file = open("Students.txt", "r")
+    print("Data saved successfully to Students.txt")
 
-        for s in students:
-            if s.name == name:
-                print(
-                    f"Name: {s.name}\nAddress: {s.address}\nAge: {s.age}\nGrade: {s.grade}")
-                return
-        print("Student not found.")
+
+def search_student(students, name):
+    for s in students:
+        if s.name.lower() == name.lower():
+            print("\nStudent found!")
+            print(f"Name: {s.name}")
+            print(f"Address: {s.address}")
+            print(f"Age: {s.age}")
+            print(f"Grade: {s.grade}")
+            return True
+
+    print("Student not found.")
+    return False
+
+
+students = []
+
+number = int(input("How many students do you want to add? "))
+
+for i in range(number):
+    print(f"\nEnter details for student {i + 1}")
 
     name = input("Enter student name: ")
-    students = []
-    for i in range(name):
-        name = input("Enter student name: ")
-        address = input("Enter student address: ")
-        age = input("Enter student age: ")
-        grade = input("Enter student grade: ")
-        s = Student(name, address, age, grade)
-        students.append(s)
+    address = input("Enter student address: ")
+    age = input("Enter student age: ")
+    grade = input("Enter student grade: ")
 
-    save(students)
+    s = Student(name, address, age, grade)
+    students.append(s)
 
+save_students(students)
 
-j = input("Do you want to search for a student? (yes/no): ")
-if j == "yes":
-     search = input("Enter student name to search: ")
-     result = search(students, search)
-     if result:
-         print("Student found.")
-    else:
-        print("Student not found.")
-    
-elif j == "no":
+choice = input(
+    "\nDo you want to search for a student? (yes/no): ").strip().lower()
+
+if choice == "yes":
+    search_name = input("Enter student name to search: ")
+    search_student(students, search_name)
+
+elif choice == "no":
     print("Exiting the program. Thank you!")
+
 else:
-    print("Please enter correct input")
+    print("Please enter correct input.")
